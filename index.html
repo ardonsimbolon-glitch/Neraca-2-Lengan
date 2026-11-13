@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAYA-LAB – Neraca Sama Lengan</title>
+<style>
+:root{font-family:Arial,sans-serif;color:#17334a;background:#eef4f8}
+*{box-sizing:border-box}body{margin:0;padding:18px}.app{max-width:1100px;margin:auto;display:flex;flex-direction:column;gap:14px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:28px;font-weight:900;color:#2586c6}.muted{color:#617486;font-size:13px}
+.panel{background:white;border:1px solid #d4e0e8;border-radius:13px;padding:14px;box-shadow:0 2px 8px #17334a0c}
+.head{background:#154d75;color:white;border-radius:9px;padding:10px;text-align:center;font-weight:800}
+button,input,textarea{font:inherit}button{padding:10px 12px;border:1px solid #cbd8e2;border-radius:9px;background:#f3f7fa;cursor:pointer;font-weight:650}
+button:hover{filter:brightness(.97)}button.active{border:2px solid #2389dc;background:#e4f2ff}
+.primary{background:#1876bd;color:white;border:0}.success{background:#26834b;color:white;border:0}.warn{background:#d68a17;color:white;border:0}
+input,textarea{width:100%;padding:10px;border:1px solid #cbd8e2;border-radius:8px;background:#fbfdff}
+label.field{font-size:12px;font-weight:700;display:block;margin-bottom:4px}
+.grid{display:grid;gap:9px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tabs{display:flex;gap:7px;flex-wrap:wrap}.tabs button{flex:1}.tabs button.active{background:#176eaa;color:white}
+.scale{background:linear-gradient(160deg,#c6e2e9 0%,#a7cbd1 48%,#d5ae7d 49%,#c28e5c 100%);color:#17364a;padding:15px;border-radius:12px;overflow:hidden}
+.beam{width:86%;height:9px;margin:14px auto 0;background:#263c4a;border-radius:9px;transition:transform .5s;position:relative}.beam:before{content:"";position:absolute;left:50%;top:3px;height:32px;width:5px;background:#263c4a}
+.pans{display:flex;justify-content:space-around;gap:8px}.pan{width:44%;min-height:115px;text-align:center;border-bottom:7px solid #597786;border-radius:0 0 50% 50%;background:#ffffff66;padding:8px 3px;transition:transform .5s}
+.emoji{font-size:28px;min-height:48px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap}
+.stat{background:#eef4f8;padding:11px;border-radius:9px;text-align:center}.stat b{display:block;font-size:21px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}td,th{padding:9px;border:1px solid #d4e0e8;text-align:left}
+.question{padding:11px;border:1px solid #d4e0e8;border-radius:9px;margin:9px 0}.question label{display:flex;gap:8px;align-items:flex-start;margin:9px 0;font-size:14px}.question input{width:auto}
+.result{border-radius:9px;padding:12px;text-align:center;font-weight:bold;background:#eef4f8;margin-top:12px}
+[hidden]{display:none!important}
+@media(max-width:600px){body{padding:9px}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:repeat(3,1fr)}.four{grid-template-columns:repeat(4,1fr)}header .title{text-align:right}.brand{font-size:23px}}
+@media print{body{background:white;padding:0}.app{max-width:none}.noprint,.tabs,button{display:none!important}.panel{box-shadow:none;break-inside:avoid}section[hidden]{display:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="mayaFull">
+<header><div><div class="brand">⚗ MAYA-LAB</div><div class="muted">LABORATORIUM MAYA • IPA SMP</div></div><div class="title" style="text-align:right"><b style="font-size:20px">NERACA SAMA LENGAN</b><div class="muted">Laboratorium Virtual Kelas VII</div></div></header>
+
+<div class="panel">
+<b>Identitas Praktikum</b>
+<div class="grid two" style="margin-top:10px">
+<div><label class="field">Nama siswa</label><input id="student" placeholder="Nama lengkap"></div>
+<div><label class="field">Kelas</label><input id="class" placeholder="Contoh: VII-A"></div>
+<div><label class="field">Kelompok</label><input id="group" placeholder="Kelompok 1"></div>
+<div><label class="field">Tanggal</label><input id="date" type="date"></div>
+</div></div>
+
+<nav class="tabs noprint">
+<button class="tab active" data-tab="practice">🔬 Praktikum</button><button class="tab" data-tab="worksheet">📋 LKPD</button><button class="tab" data-tab="quiz">📝 Evaluasi</button><button class="tab" data-tab="teacher">👨‍🏫 Guru</button>
+</nav>
+
+<section id="practice">
+<div class="panel"><div class="head">TUJUAN PRAKTIKUM</div><p style="font-size:14px">Siswa dapat menggunakan neraca sama lengan untuk menentukan massa benda dengan membandingkannya dengan anak timbangan hingga mencapai keadaan seimbang.</p></div>
+<div class="panel"><div class="head">1. PILIH BENDA</div><div id="objects" class="grid two" style="margin-top:10px">
+<button class="choice active" data-obj="batu">🪨 Batu</button><button class="choice" data-obj="kayu">🪵 Balok kayu</button><button class="choice" data-obj="hapus">🧽 Penghapus</button><button class="choice" data-obj="kelereng">🔵 Kelereng</button><button class="choice" data-obj="baut">🔩 Baut</button><button class="choice" data-obj="bola">⚽ Bola kecil</button>
+</div><p class="muted">Pilih benda yang akan diukur. Massa sebenarnya tidak ditampilkan sebelum hasil pengukuran dibuka.</p></div>
+<div class="panel"><div class="head">2. PILIH ANAK TIMBANGAN</div><div class="grid four" style="margin-top:10px" id="weights">
+<button data-w="100">⚖️<br>100 g</button><button data-w="50">⚖️<br>50 g</button><button data-w="20">⚖️<br>20 g</button><button data-w="10">⚖️<br>10 g</button><button data-w="5">⚖️<br>5 g</button><button data-w="2">⚖️<br>2 g</button><button data-w="1">⚖️<br>1 g</button>
+</div><p class="muted">Tekan untuk menambahkan anak timbangan pada piring kanan.</p></div>
+<div class="panel"><div class="head">3. SIMULASI NERACA</div><div class="scale" style="margin-top:12px">
+<div id="balanceText" style="text-align:center;font-weight:800;font-size:14px">NERACA BELUM SEIMBANG</div><div style="text-align:center;font-size:36px">⚖️</div><div id="beam" class="beam"></div>
+<div class="pans" style="margin-top:10px">
+<div class="pan" id="leftPan"><b style="font-size:12px">PIRING KIRI</b><div class="emoji" id="objEmoji">🪨</div><b id="objName" style="font-size:12px">Batu</b></div>
+<div class="pan" id="rightPan"><b style="font-size:12px">PIRING KANAN</b><div id="weightEmoji" class="emoji">—</div><b id="weightList" style="font-size:12px">Kosong</b></div>
+</div><div style="text-align:center;font-weight:bold;margin-top:12px">NERACA SAMA LENGAN</div></div>
+<div class="grid two" style="margin-top:10px"><div class="stat"><span class="muted">Total anak timbangan</span><b id="total">0 g</b></div><div class="stat"><span class="muted">Selisih massa</span><b id="diff">–</b></div></div>
+<div id="status" class="result">Tambahkan anak timbangan.</div>
+<div class="grid two noprint" style="margin-top:10px"><button class="success" id="check">✓ Periksa</button><button class="primary" id="undo">↶ Kurangi satu</button><button class="primary" id="show">👁 Lihat massa</button><button class="warn" id="reset">↻ Reset</button></div>
+</div>
+<div class="panel"><div class="head">4. HASIL PENGUKURAN</div><table><tbody>
+<tr><td>Nama benda</td><td id="rName">Batu</td></tr><tr><td>Anak timbangan</td><td id="rCount">0 buah</td></tr><tr><td>Total massa</td><td id="rTotal">0 g</td></tr><tr><td>Kondisi</td><td id="rState">Belum seimbang</td></tr><tr><td>Massa benda</td><td id="rMass">Belum diketahui</td></tr>
+</tbody></table><button id="save" class="success noprint" style="width:100%;margin-top:12px">＋ Simpan hasil percobaan</button><div id="history" style="font-size:14px;margin-top:9px"></div></div>
+</section>
+
+<section id="worksheet" hidden>
+<div class="panel"><div class="head">LKPD DIGITAL – PENGUKURAN MASSA</div><p style="font-size:14px">Petunjuk: Lakukan pengukuran minimal tiga benda. Catat hasilnya dalam tabel berikut.</p><div style="overflow-x:auto"><table><thead><tr><th>No.</th><th>Nama benda</th><th>Massa (g)</th><th>Kondisi</th></tr></thead><tbody id="worksheetRows"><tr><td colspan="4">Belum ada data. Simpan hasil percobaan terlebih dahulu.</td></tr></tbody></table></div></div>
+<div class="panel"><div class="head">ANALISIS DAN PERTANYAAN</div>
+<div style="margin-top:12px"><label class="field">1. Apa fungsi neraca sama lengan?</label><textarea id="a1" rows="2" placeholder="Jawaban siswa..."></textarea></div>
+<div style="margin-top:12px"><label class="field">2. Mengapa kedua piring harus seimbang?</label><textarea id="a2" rows="2" placeholder="Jawaban siswa..."></textarea></div>
+<div style="margin-top:12px"><label class="field">3. Apa yang terjadi jika anak timbangan terlalu berat?</label><textarea id="a3" rows="2" placeholder="Jawaban siswa..."></textarea></div>
+<div style="margin-top:12px"><label class="field">4. Bagaimana menentukan massa benda?</label><textarea id="a4" rows="2" placeholder="Jawaban siswa..."></textarea></div>
+<div style="margin-top:12px"><label class="field">Kesimpulan praktikum</label><textarea id="conclusion" rows="3" placeholder="Tuliskan kesimpulan berdasarkan hasil percobaan..."></textarea></div>
+<div style="margin-top:12px"><label class="field">Refleksi diri: Apa yang sudah kamu pelajari?</label><textarea id="reflection" rows="2" placeholder="Refleksi siswa..."></textarea></div>
+<button id="printL" class="primary noprint" style="width:100%;margin-top:12px">🖨 Cetak LKPD / Simpan PDF</button>
+</div></section>
+
+<section id="quiz" hidden class="panel"><div class="head">EVALUASI PEMAHAMAN SISWA</div><p style="font-size:14px">Pilih satu jawaban yang paling tepat. Setiap soal bernilai 20 poin.</p><div id="questions"></div><button id="grade" class="success noprint" style="width:100%">Periksa Jawaban</button><div id="score" style="text-align:center;font-weight:bold;margin-top:12px"></div></section>
+
+<section id="teacher" hidden>
+<div class="panel"><div class="head">DASHBOARD GURU</div><p class="muted">Rekap hasil praktikum dan evaluasi siswa pada sesi ini.</p><div class="grid three" style="margin-top:12px"><div class="stat"><span class="muted">Percobaan</span><b id="nExp">0</b></div><div class="stat"><span class="muted">Benda</span><b id="nObj">0</b></div><div class="stat"><span class="muted">Nilai kuis</span><b id="nScore">–</b></div></div><div style="overflow-x:auto"><table><thead><tr><th>No.</th><th>Benda</th><th>Massa</th><th>Jumlah beban</th></tr></thead><tbody id="teacherRows"><tr><td colspan="4">Belum ada data.</td></tr></tbody></table></div><button id="printReport" class="primary noprint" style="width:100%;margin-top:12px">🖨 Cetak laporan guru / PDF</button></div>
+<div class="panel"><div class="head">PANDUAN GURU</div><ul style="font-size:14px;line-height:1.8;padding-left:20px"><li>Awali dengan menjelaskan prinsip keseimbangan neraca.</li><li>Minta siswa mencoba kombinasi anak timbangan.</li><li>Pastikan siswa mencatat minimal tiga hasil pengukuran.</li><li>Gunakan LKPD untuk menilai keterampilan proses sains.</li><li>Gunakan evaluasi untuk menilai pemahaman konsep.</li></ul></div>
+</section>
+<footer class="muted" style="text-align:center">MAYA-LAB • Media Pembelajaran IPA • SMP Cinta Rakyat 1 • Tahun Ajaran 2026/2027</footer>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('mayaFull');const $=id=>document.getElementById(id);
+const objects={batu:{name:'Batu',emoji:'🪨',mass:80},kayu:{name:'Balok kayu',emoji:'🪵',mass:50},hapus:{name:'Penghapus',emoji:'🧽',mass:20},kelereng:{name:'Kelereng',emoji:'🔵',mass:10},baut:{name:'Baut',emoji:'🔩',mass:5},bola:{name:'Bola kecil',emoji:'⚽',mass:100}};
+let selected='batu',weights=[],revealed=false,records=[];
+const questions=[
+{q:'Alat untuk mengukur massa benda pada percobaan ini adalah ...',a:['Termometer','Neraca sama lengan','Stopwatch','Penggaris'],c:1},
+{q:'Jika neraca seimbang, berarti ...',a:['Massa kiri lebih besar','Massa kanan lebih besar','Massa kedua sisi sama','Tidak ada massa'],c:2},
+{q:'Massa benda 50 g. Anak timbangan yang sesuai adalah ...',a:['20 g + 10 g','50 g','100 g','10 g + 5 g'],c:1},
+{q:'Jika piring kanan lebih turun, maka ...',a:['Piring kanan lebih berat','Piring kiri lebih berat','Keduanya sama','Neraca rusak'],c:0},
+{q:'Anak timbangan 20 g, 10 g, dan 5 g memiliki massa total ...',a:['25 g','30 g','35 g','40 g'],c:2}];
+const sum=()=>weights.reduce((a,b)=>a+b,0),balanced=()=>sum()===objects[selected].mass;
+function render(){
+const o=objects[selected],s=sum(),ok=balanced();
+document.querySelectorAll('[data-obj]').forEach(b=>b.classList.toggle('active',b.dataset.obj===selected));
+$('objEmoji').textContent=o.emoji;$('objName').textContent=o.name;$('weightEmoji').textContent=weights.length?'⚖️'.repeat(Math.min(weights.length,12)):'—';$('weightList').textContent=weights.length?weights.join(' + ')+' g':'Kosong';
+$('total').textContent=s+' g';$('diff').textContent=Math.abs(o.mass-s)+' g';
+$('beam').style.transform=`rotate(${Math.max(-14,Math.min(14,(s-o.mass)*.16))}deg)`;
+$('leftPan').style.transform=s>o.mass?'translateY(-5px)':s<o.mass?'translateY(12px)':'translateY(0)';
+$('rightPan').style.transform=s<o.mass?'translateY(-5px)':s>o.mass?'translateY(12px)':'translateY(0)';
+$('balanceText').textContent=ok?'✓ NERACA SEIMBANG':s>o.mass?'KANAN LEBIH BERAT':'KIRI LEBIH BERAT';
+$('status').textContent=ok?'✓ SEIMBANG! Massa benda = '+o.mass+' g':s>o.mass?'Piring kanan lebih berat. Kurangi anak timbangan.':'Piring kiri lebih berat. Tambahkan anak timbangan.';
+$('rName').textContent=o.name;$('rCount').textContent=weights.length+' buah';$('rTotal').textContent=s+' g';$('rState').textContent=ok?'Seimbang':s>o.mass?'Kanan lebih berat':'Kiri lebih berat';$('rMass').textContent=revealed?o.mass+' g':'Belum diketahui';
+}
+document.querySelectorAll('[data-obj]').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.obj;weights=[];revealed=false;render()}));
+document.querySelectorAll('[data-w]').forEach(b=>b.addEventListener('click',()=>{weights.push(+b.dataset.w);revealed=false;render()}));
+$('check').onclick=render;$('undo').onclick=()=>{weights.pop();revealed=false;render()};$('show').onclick=()=>{revealed=true;render()};$('reset').onclick=()=>{weights=[];revealed=false;render()};
+$('save').onclick=()=>{if(!balanced()){ $('status').textContent='Belum seimbang. Seimbangkan neraca sebelum menyimpan.';return}records.push({name:objects[selected].name,mass:sum(),count:weights.length});updateRecords()};
+function updateRecords(){
+$('history').innerHTML=records.map((r,i)=>`<div style="padding:8px;margin:5px 0;background:#eef4f8;border-radius:7px">Percobaan ${i+1}: ${r.name} — ${r.mass} g</div>`).join('');
+$('worksheetRows').innerHTML=records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.mass} g</td><td>Seimbang</td></tr>`).join('');
+$('teacherRows').innerHTML=records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.mass} g</td><td>${r.count}</td></tr>`).join('');
+$('nExp').textContent=records.length;$('nObj').textContent=new Set(records.map(r=>r.name)).size;
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(t=>t.classList.toggle('active',t===b));['practice','worksheet','quiz','teacher'].forEach(id=>$(id).hidden=id!==b.dataset.tab)}));
+$('date').value=new Date().toISOString().slice(0,10);
+$('questions').innerHTML=questions.map((q,i)=>`<div class="question"><b>${i+1}. ${q.q}</b>${q.a.map((a,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${a}</label>`).join('')}</div>`).join('');
+$('grade').onclick=()=>{let score=0,answered=0;questions.forEach((q,i)=>{const a=document.querySelector(`input[name="q${i}"]:checked`);if(a){answered++;if(+a.value===q.c)score+=20}});if(answered<5){$('score').textContent='Jawab semua 5 soal terlebih dahulu.';return}$('score').textContent='Nilai kamu: '+score+'/100 • '+(score>=80?'Sangat baik!':score>=60?'Baik, terus berlatih!':'Ayo pelajari kembali materi!');$('nScore').textContent=score};
+$('printL').onclick=()=>window.print();$('printReport').onclick=()=>window.print();render();
+})();
+</script>
+</body></html>
